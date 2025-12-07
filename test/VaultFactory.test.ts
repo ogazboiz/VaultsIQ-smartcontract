@@ -328,5 +328,38 @@ describe("VaultFactory", function () {
       expect(address).to.equal(ethers.ZeroAddress);
     });
   });
+
+  describe("Event Emissions", function () {
+    it("Should emit UserRegistered event", async function () {
+      await expect(vaultFactory.connect(user1).registerUser("alice", "Bio"))
+        .to.emit(vaultFactory, "UserRegistered")
+        .withArgs(user1.address, await ethers.provider.getBlockNumber());
+    });
+
+    it("Should emit RegistrationPaused event", async function () {
+      await expect(vaultFactory.pauseRegistration())
+        .to.emit(vaultFactory, "RegistrationPaused");
+    });
+
+    it("Should emit RegistrationUnpaused event", async function () {
+      await vaultFactory.pauseRegistration();
+      await expect(vaultFactory.unpauseRegistration())
+        .to.emit(vaultFactory, "RegistrationUnpaused");
+    });
+
+    it("Should emit UserInfoUpdated event", async function () {
+      await vaultFactory.connect(user1).registerUser("alice", "Original");
+      await expect(vaultFactory.adminUpdateUserInfo(user1.address, "alice_new", "Updated"))
+        .to.emit(vaultFactory, "UserInfoUpdated")
+        .withArgs(user1.address, "alice_new", "Updated");
+    });
+
+    it("Should emit UserRemoved event", async function () {
+      await vaultFactory.connect(user1).registerUser("alice", "Bio");
+      await expect(vaultFactory.adminRemoveUser(user1.address))
+        .to.emit(vaultFactory, "UserRemoved")
+        .withArgs(user1.address);
+    });
+  });
 });
 
