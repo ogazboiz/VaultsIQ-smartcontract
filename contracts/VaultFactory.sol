@@ -10,4 +10,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  * @notice Users must register before creating vaults
  */
 contract VaultFactory is Ownable, ReentrancyGuard {
+    // User registration mappings
+    mapping(address => bool) public registeredUsers;
+    mapping(address => string) public userUsernames;
+    mapping(address => string) public userBios;
+    mapping(address => uint256) public userRegistrationTimestamps;
 
