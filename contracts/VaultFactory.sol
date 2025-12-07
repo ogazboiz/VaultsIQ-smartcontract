@@ -52,4 +52,8 @@ contract VaultFactory is Ownable, ReentrancyGuard {
      * @notice Users must register before creating vaults
      */
     function registerUser(string memory username, string memory bio) external nonReentrant {
+        // Check if user is already registered
+        if (registeredUsers[msg.sender]) {
+            revert AlreadyRegistered(msg.sender);
+        }
 
