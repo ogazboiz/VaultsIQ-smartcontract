@@ -261,16 +261,20 @@ contract VaultFactory is Ownable, ReentrancyGuard {
 
     /**
      * @dev Pause user registrations (admin only)
+     * @notice Prevents new user registrations while paused
      */
     function pauseRegistration() external onlyOwner {
+        require(!registrationPaused, "Registration already paused");
         registrationPaused = true;
         emit RegistrationPaused();
     }
 
     /**
      * @dev Unpause user registrations (admin only)
+     * @notice Allows new user registrations to proceed
      */
     function unpauseRegistration() external onlyOwner {
+        require(registrationPaused, "Registration not paused");
         registrationPaused = false;
         emit RegistrationUnpaused();
     }
