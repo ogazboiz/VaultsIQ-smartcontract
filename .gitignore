@@ -40,3 +40,13 @@ build/
 # Misc
 *.sol.js
 *.sol.ts
+
+# Planning and PR description files
+*.md
+!README.md
+!ISSUES.md
+SETUP_CHECKLIST.md
+
+# Commit timing scripts
+*.sh
+!scripts/*.sh
