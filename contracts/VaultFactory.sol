@@ -42,6 +42,10 @@ contract VaultFactory is Ownable, ReentrancyGuard {
 
     // Events
     event UserRegistered(address indexed user, uint256 timestamp);
+    event UserInfoUpdated(address indexed user, string newUsername, string newBio);
+    event UserRemoved(address indexed user);
+    event RegistrationPaused();
+    event RegistrationUnpaused();
 
     /**
      * @dev Constructor sets the contract owner
@@ -260,6 +264,7 @@ contract VaultFactory is Ownable, ReentrancyGuard {
      */
     function pauseRegistration() external onlyOwner {
         registrationPaused = true;
+        emit RegistrationPaused();
     }
 
     /**
@@ -267,6 +272,7 @@ contract VaultFactory is Ownable, ReentrancyGuard {
      */
     function unpauseRegistration() external onlyOwner {
         registrationPaused = false;
+        emit RegistrationUnpaused();
     }
 
     /**
@@ -314,6 +320,8 @@ contract VaultFactory is Ownable, ReentrancyGuard {
         if (newBioBytes.length > 0) {
             userBios[user] = newBio;
         }
+        
+        emit UserInfoUpdated(user, newUsername, newBio);
     }
 
     /**
@@ -331,6 +339,8 @@ contract VaultFactory is Ownable, ReentrancyGuard {
         delete userRegistrationTimestamps[user];
         delete usernameToAddress[username];
         _registeredUsersCount--;
+        
+        emit UserRemoved(user);
     }
 
     /**
