@@ -75,3 +75,13 @@ contract VaultFactory is Ownable, ReentrancyGuard {
             revert InvalidBio("Bio exceeds maximum length");
         }
 
+        // Store user registration data
+        registeredUsers[msg.sender] = true;
+        userUsernames[msg.sender] = username;
+        userBios[msg.sender] = bio;
+        userRegistrationTimestamps[msg.sender] = block.timestamp;
+
+        // Emit event
+        emit UserRegistered(msg.sender, block.timestamp);
+    }
+
