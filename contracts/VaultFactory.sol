@@ -273,3 +273,21 @@ contract VaultFactory is Ownable, ReentrancyGuard {
         _registeredUsersCount--;
     }
 
+    /**
+     * @dev Get username by address (reverse lookup helper)
+     * @param user Address of the user
+     * @return username User's username or empty string if not registered
+     */
+    function getUsernameByAddress(address user) external view returns (string memory) {
+        return userUsernames[user];
+    }
+
+    /**
+     * @dev Check if username is available
+     * @param username Username to check
+     * @return available True if username is available
+     */
+    function isUsernameAvailable(string memory username) external view returns (bool) {
+        return usernameToAddress[username] == address(0);
+    }
+
