@@ -80,6 +80,7 @@ contract VaultFactory is Ownable, ReentrancyGuard {
         userUsernames[msg.sender] = username;
         userBios[msg.sender] = bio;
         userRegistrationTimestamps[msg.sender] = block.timestamp;
+        _registeredUsersCount++;
 
         // Emit event
         emit UserRegistered(msg.sender, block.timestamp);
