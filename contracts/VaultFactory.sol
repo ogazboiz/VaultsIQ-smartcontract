@@ -351,3 +351,12 @@ contract VaultFactory is Ownable, ReentrancyGuard {
         return usernameToAddress[username] == address(0);
     }
 
+    /**
+     * @dev Get address by username (reverse lookup)
+     * @param username Username to lookup
+     * @return userAddress Address associated with username, or zero address if not found
+     */
+    function getAddressByUsername(string memory username) external view returns (address) {
+        return usernameToAddress[username];
+    }
+
